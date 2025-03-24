@@ -1,9 +1,7 @@
 fastapi 
-uvicorn 
-sqlalchemy 
-psycopg2 
-spacy
-pthon-dotenv
+uvicorn
+python-dotenv
 pandas
+numpy
 openai
 fastapi-cors
