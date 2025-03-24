@@ -2,6 +2,9 @@
 
 Transaction Query & Insights is a FastAPI + React-powered analytics dashboard that enables users to query and visualize transaction data from a CSV dataset. The backend efficiently processes user queries using LLM-powered query conversion, while the frontend provides interactive charts for key business insights.
 
+## Exploratory Data Analysis
+Before moving on to the development phase, I performed Exploratory Data Analysis (EDA) on the CSV dataset to understand its structure and contents. This process involved data wrangling steps such as handling missing values, data type conversions(date from object type to date tiime format), and identifying key features for analysis. Although the CSV file could have been directly loaded into a database like PostgreSQL for more efficient querying and storage, I decided to keep it as a CSV for simplicity in this project.
+
 ## Front End Setup
 
 ### Prerequisites
