@@ -1,0 +1,9 @@
+fastapi 
+uvicorn 
+sqlalchemy 
+psycopg2 
+spacy
+pthon-dotenv
+pandas
+openai
+fastapi-cors

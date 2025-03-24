@@ -1,0 +1,126 @@
+/* Base Styles */
+:root {
+--primary-color: #6366f1;
+--secondary-color: #4f46e5;
+--accent-color: #818cf8;
+--background: #0f172a;
+--surface: #1e293b;
+--text-primary: #f8fafc;
+--text-secondary: #94a3b8;
+--error-color: #ef4444;
+--success-color: #22c55e;
+--border-radius: 12px;
+--transition: all 0.3s ease;
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+background: var(--background);
+color: var(--text-primary);
+font-family: 'Inter', system-ui, -apple-system, sans-serif;
+line-height: 1.6;
+min-height: 100vh;
+}
+
+.app-container {
+max-width: 1400px;
+margin: 0 auto;
+padding: 2rem;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
+
+/* Header Styles */
+.header {
+text-align: center;
+margin-bottom: 2rem;
+animation: fadeIn 0.8s ease;
+}
+
+.title-gradient {
+background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+font-size: 2.5rem;
+margin-bottom: 1rem;
+}
+
+.navigation {
+display: flex;
+justify-content: center;
+gap: 1rem;
+margin-top: 1.5rem;
+}
+
+.nav-btn {
+padding: 0.8rem 2rem;
+background: var(--surface);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: var(--border-radius);
+color: var(--text-primary);
+cursor: pointer;
+transition: var(--transition);
+}
+
+.nav-btn.active {
+background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+border-color: transparent;
+}
+
+.nav-btn:hover {
+transform: translateY(-2px);
+}
+
+.custom-query-prompt {
+text-align: center;
+margin: 2rem 0;
+color: var(--text-secondary);
+}
+
+.custom-query-prompt span {
+color: var(--accent-color);
+text-decoration: underline;
+cursor: pointer;
+transition: var(--transition);
+}
+
+.custom-query-prompt span:hover {
+color: var(--primary-color);
+}
+
+/* Footer Styles */
+.footer {
+margin-top: auto;
+padding: 2rem 0;
+text-align: center;
+color: var(--text-secondary);
+font-size: 0.9rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(-20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.app-container {
+    padding: 1rem;
+}
+
+.title-gradient {
+    font-size: 2rem;
+}
+
+.navigation {
+    flex-direction: column;
+}
+}

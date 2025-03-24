@@ -1,0 +1,53 @@
+.insight-container {
+padding: 1rem;
+}
+
+.metrics-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 2rem;
+margin-top: 2rem;
+}
+
+.metric-card {
+background: var(--surface);
+padding: 1.5rem;
+border-radius: var(--border-radius);
+text-align: center;
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metric-card h3 {
+color: var(--text-secondary);
+margin-bottom: 0.5rem;
+font-size: 1rem;
+}
+
+.metric-card p {
+font-size: 1.5rem;
+font-weight: bold;
+color: var(--primary-color);
+}
+
+.chart-card {
+background: var(--surface);
+padding: 1.5rem;
+border-radius: var(--border-radius);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chart-card h3 {
+color: var(--text-primary);
+margin-bottom: 1rem;
+font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+.metrics-grid {
+    grid-template-columns: 1fr;
+}
+
+.chart-card {
+    overflow-x: auto;
+}
+}
