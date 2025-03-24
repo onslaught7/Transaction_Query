@@ -1,6 +1,6 @@
 # Transaction Chart Query
 
-This project consists of a React front end and a Python back end. Follow the instructions below to set up and run the front end.
+Transaction Query & Insights is a FastAPI + React-powered analytics dashboard that enables users to query and visualize transaction data from a CSV dataset. The backend efficiently processes user queries using LLM-powered query conversion, while the frontend provides interactive charts for key business insights.
 
 ## Front End Setup
 
