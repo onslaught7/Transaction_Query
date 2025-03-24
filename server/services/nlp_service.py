@@ -18,7 +18,7 @@ columns = df.columns.tolist()
 # print(columns)
 
 
-# query openai for user query to pandas query conversion
+# querying openai for user query to pandas query conversion
 def query_openai_for_pandas(user_query):
     prompt = f"""
     You are a data assistant that converts natural language queries into pandas DataFrame operations.
@@ -107,4 +107,4 @@ def generate_user_friendly_response(result, user_query):
     explanation = response.choices[0].message.content.strip()
     return explanation
     
-print(process_query("What was the total revenue in books in 2023"))
+# print(process_query("What was the total revenue in books in 2023"))

@@ -3,22 +3,41 @@ import pandas as pd
 
 router = APIRouter(prefix="/stats", tags=["Statistics"])
 
-# Loading CSV
+# Load CSV Once for Performance
 CSV_FILE_PATH = "./cleaned_&_transformed_transactions.csv"
 df = pd.read_csv(CSV_FILE_PATH)
 
 @router.get("/")
 def get_statistics():
-    """Returns key statistics from the dataset."""
-    stats = {
-        "total_revenue": df["totalamount"].sum(),
-        "top_product_category": df["productcategory"].mode()[0],
-        "total_transactions": len(df),
-        "monthly_sales": df.groupby("month")["totalamount"].sum().to_dict(),
-        "store_performance": df.groupby("storelocation")["totalamount"].sum().to_dict(),
-        "payment_methods": df["paymentmethod"].value_counts().to_dict(),
-    }
+    try:
+        stats = {
+            "total_revenue": float(df["totalamount"].sum()),  
+            "top_product_category": df["productcategory"].mode()[0],
+            "total_transactions": int(len(df)), 
 
-    return stats
+            "store_performance": [
+                {"store": k, "sales": float(v)}
+                for k, v in df.groupby("storelocation")["totalamount"]
+                .sum()
+                .sort_values(ascending=False)
+                .head(10) 
+                .items()
+            ],
+
+            "monthly_sales": [
+                {"month": k, "sales": float(v)}
+                for k, v in df.groupby("month")["totalamount"].sum().items()
+            ][-6:],  
+
+            "payment_methods": [
+                {"method": k, "value": int(v)}
+                for k, v in df["paymentmethod"].value_counts().items()
+            ],
+        }
+        
+        return stats
+    
+    except Exception as e:
+        return {"error": str(e)}
 
 print(get_statistics())

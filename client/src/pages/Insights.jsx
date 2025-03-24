@@ -4,17 +4,26 @@ import "./Insights.css";
 
 const Insights = () => {
     const [stats, setStats] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-    fetch(`${import.meta.env.VITE_SERVER_URL}/stats`) // Fetch statistics from FastAPI
-        .then((response) => response.json())
-        .then((data) => setStats(data))
-        .catch((error) => console.error("Error fetching data:", error));
+        let isMounted = true; // Prevent state updates if unmounted
+
+        fetch(`${import.meta.env.VITE_API_URL}/stats`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (isMounted) {
+                    setStats(data);
+                    setLoading(false);
+                }
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+
+        return () => (isMounted = false); // Cleanup to prevent memory leaks
     }, []);
 
-    if (!stats) return <p>Loading statistics...</p>;
+    if (loading) return <p className="loading-text">Loading statistics...</p>;
 
-    // Define chart colors
     const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
     return (
@@ -38,10 +47,10 @@ const Insights = () => {
 
         {/* Store Performance (Bar Chart) */}
         <div className="chart-card">
-            <h3>Store Performance</h3>
+            <h3>Top 10 Store Performance</h3>
             <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={Object.entries(stats.store_performance).map(([store, sales]) => ({ store, sales }))}>
-                <XAxis dataKey="store" />
+            <BarChart data={stats.store_performance}>
+                <XAxis dataKey="store" tick={{ fontSize: 10 }} angle={-45} textAnchor="end" height={80} />
                 <YAxis />
                 <Tooltip />
                 <Bar dataKey="sales" fill="#8884d8" />
@@ -51,9 +60,9 @@ const Insights = () => {
 
         {/* Monthly Sales (Bar Chart) */}
         <div className="chart-card">
-            <h3>Monthly Sales</h3>
+            <h3>Last 6 Months of Sales</h3>
             <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={Object.entries(stats.monthly_sales).map(([month, sales]) => ({ month, sales }))}>
+            <BarChart data={stats.monthly_sales}>
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip />
@@ -68,7 +77,7 @@ const Insights = () => {
             <ResponsiveContainer width="100%" height={300}>
             <PieChart>
                 <Pie
-                data={Object.entries(stats.payment_methods).map(([method, value]) => ({ method, value }))}
+                data={stats.payment_methods}
                 dataKey="value"
                 nameKey="method"
                 cx="50%"
@@ -76,7 +85,7 @@ const Insights = () => {
                 outerRadius={100}
                 label
                 >
-                {Object.keys(stats.payment_methods).map((_, index) => (
+                {stats.payment_methods.map((_, index) => (
                     <Cell key={index} fill={COLORS[index % COLORS.length]} />
                 ))}
                 </Pie>
@@ -88,6 +97,6 @@ const Insights = () => {
         </div>
     </div>
     );
-    };
+};
 
-    export default Insights;
+export default Insights;
